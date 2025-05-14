@@ -37,7 +37,7 @@ public class BranchDao {
 	}
 
 //	3.update method
-	public Branch updateBank(int id,Branch b)
+	public Branch updateBranch(int id,Branch b)
 	{
 		Branch branch = findbybranch(id);
 		if(branch!=null)

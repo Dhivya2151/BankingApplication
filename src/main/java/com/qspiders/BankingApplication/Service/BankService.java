@@ -6,14 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.qspiders.BankingApplication.Dao.Bankdao;
 import com.qspiders.BankingApplication.Dao.BranchDao;
 import com.qspiders.BankingApplication.Dto.Bank;
 import com.qspiders.BankingApplication.Dto.Branch;
+import com.qspiders.BankingApplication.Exception.BankListNotFoundException;
 import com.qspiders.BankingApplication.Exception.BankNotFoundException;
 import com.qspiders.BankingApplication.Exception.BranchNotFoundException;
-@Repository
+@Service
 public class BankService {
 	@Autowired
 	Bankdao dao;
@@ -70,9 +72,17 @@ public class BankService {
 	}
 	
 //	
-	public List<Bank> findall()
+	public ResponseEntity<List<Bank>>  findall()
 	{
-		return dao.findall();
+		 List<Bank> list = dao.findall();
+		 if(list!=null)
+		 {
+		return new ResponseEntity<List<Bank>>(list,HttpStatus.FOUND);
+		 }
+		 else
+		 {
+			 throw new BankListNotFoundException("Zero bank is there ") ;
+		 }
 	}
 	
 //	add branch to bank
