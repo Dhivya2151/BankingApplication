@@ -11,13 +11,16 @@ import org.springframework.stereotype.Service;
 import com.qspiders.BankingApplication.Dao.Bankdao;
 import com.qspiders.BankingApplication.Dao.BranchDao;
 import com.qspiders.BankingApplication.Dao.CustomerDao;
+import com.qspiders.BankingApplication.Dao.ManagerDao;
 import com.qspiders.BankingApplication.Dto.Bank;
 import com.qspiders.BankingApplication.Dto.Branch;
 import com.qspiders.BankingApplication.Dto.Customer;
+import com.qspiders.BankingApplication.Dto.Manager;
 import com.qspiders.BankingApplication.Exception.BankNotFoundException;
 import com.qspiders.BankingApplication.Exception.BranchListNotFoundException;
 import com.qspiders.BankingApplication.Exception.BranchNotFoundException;
 import com.qspiders.BankingApplication.Exception.CustomerNotFoundException;
+import com.qspiders.BankingApplication.Exception.ManagerNotFoundException;
 
 @Service
 public class BranchService {
@@ -27,6 +30,8 @@ BranchDao dao;
 	Bankdao bdao;
 	@Autowired
 	CustomerDao cdao;
+	@Autowired
+	ManagerDao mdao;
 //	
 	public  ResponseEntity<Branch> savebranch(Branch b)
 	{
@@ -138,22 +143,85 @@ BranchDao dao;
 	 
 //	 
 	 
-	 public ResponseEntity addcustomertobranch(int bid,Customer c)
+	 public ResponseEntity<Branch> addcustomertobranch(int bid,int  cid)
 	 {
 		 Branch dbbranch = dao.findbybranch(bid);
+		 					Customer dbcustomer = cdao.findbycustomer(cid);
 		 if(dbbranch!=null)
 		 {
-			 if(c!=null)
+			 if(dbcustomer!=null)
 			 {
-			 dbbranch.getCustomer().add(c);
+			 dbbranch.getCustomer().add(dbcustomer);
 			return  new ResponseEntity(dao.updateBranch(bid, dbbranch),HttpStatus.OK);
 			 }
-			 throw new CustomerNotFoundException("branch not found ") ; 
+			 throw new CustomerNotFoundException("Customers not found for the given id ") ; 
+		 }
+		 throw new BranchNotFoundException("branch not found for the given id") ;
+	 }
+	 
+//	 
+	
+	 public ResponseEntity<Branch> removecustomerfrombranch(int bid,int cid)
+	 {
+		 Branch dbbranch = dao.findbybranch(bid);
+		 Customer dbcustomer = cdao.findbycustomer(cid);
+    if(dbbranch!=null)
+		 {
+			 if(dbcustomer!=null)
+			 {
+			 dbbranch.getCustomer().remove(dbcustomer);
+			return  new ResponseEntity(dao.updateBranch(bid, dbbranch),HttpStatus.OK);
+			 }
+			 throw new CustomerNotFoundException("Customer not found for the given id ") ; 
 		 }
 		 throw new BranchNotFoundException("branch not found for the given id") ;
 	 }
 	
+//	 
+	 
+	 public ResponseEntity<Branch> addmanagertobranch(int branchid,int managerid)
+	 {
+		 Branch dbbranch = dao.findbybranch(branchid);
+		 Manager dbmanager = mdao.findbymanager(managerid);
+		 if(dbbranch!=null)
+		 {
+			 if(dbmanager!=null)
+			 {
+				 dbbranch.setManager(dbmanager);
+				 dbmanager.setBranch(dbbranch);
+				Branch upbranch = dao.updateBranch(branchid, dbbranch);
+				return  new ResponseEntity<Branch>(upbranch,HttpStatus.OK);
+						
+						}
+			 throw new BranchNotFoundException("branch not found for the given id") ;
+			
+		 }
+		 throw new ManagerNotFoundException("Manager not found for the given id") ;
+		 
+	 }
 	
+//	 
+	 
+	 public ResponseEntity<Branch> removemanagertobranch(int branchid,int managerid)
+	 {
+		 Branch dbbranch = dao.findbybranch(branchid);
+		 Manager dbmanager = mdao.findbymanager(managerid);
+		 if(dbbranch!=null)
+		 {
+			 if(dbmanager!=null)
+			 {
+				 dbbranch.setManager(null);
+				 dbmanager.setBranch(null);
+				Branch upbranch = dao.updateBranch(branchid, dbbranch);
+				return  new ResponseEntity<Branch>(upbranch,HttpStatus.OK);
+						
+						}
+			 throw new BranchNotFoundException("branch not found for the given id") ;
+			
+		 }
+		 throw new ManagerNotFoundException("Manager not found for the given id") ;
+		 
+	 }
 	
 	
 	

@@ -16,7 +16,7 @@ public class CustomerDao {
 	@Autowired
 	CustomerRepo repo;
 //	1.save
-	public  Customer  savemanager(Customer c)
+	public  Customer  savecustomer(Customer c)
 	{
 		return repo.save(c);
 	}
@@ -52,7 +52,7 @@ public class CustomerDao {
 	}
 	
 //	4.update
-	public Customer updatemanager(int id,Customer c)
+	public Customer updatecustomer(int id,Customer c)
 	{
 		Customer customer = findbycustomer(id);
 		if(customer!=null)
@@ -87,8 +87,12 @@ public class CustomerDao {
 		return repo.findAll();
 	}
 	
+//	6.findbyname
 	
-	
+	public List<Customer> findbycustomername(String name)
+	{
+		return repo.findBycustomerName(name);
+	}
 }
 
 

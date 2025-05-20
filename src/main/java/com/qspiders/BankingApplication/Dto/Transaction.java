@@ -1,5 +1,7 @@
 package com.qspiders.BankingApplication.Dto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,8 +16,11 @@ public class Transaction {
 	private int transactinId;
 	private TransactionType type;
 	private int  transactionAccount;
+	
 	private double transactionAmmount;
+	
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonBackReference
 		private Account account;
 	public enum TransactionType{
 		CREDIT,

@@ -2,6 +2,8 @@ package com.qspiders.BankingApplication.Dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +17,12 @@ public class Account {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	private int accountId;
+	
+	
 	private double accountBalance;
 	private AccountType type;
 	@OneToMany(cascade = CascadeType.ALL)
+	 @JsonManagedReference
 	private List<Transaction> transaction;
 	
 	public enum AccountType{

@@ -13,6 +13,7 @@ import com.qspiders.BankingApplication.Dto.Branch;
 import com.qspiders.BankingApplication.Dto.Manager;
 import com.qspiders.BankingApplication.Exception.BranchNotFoundException;
 import com.qspiders.BankingApplication.Exception.ManagerListNotFoundException;
+import com.qspiders.BankingApplication.Exception.ManagerNameNotFoundException;
 import com.qspiders.BankingApplication.Exception.ManagerNotFoundException;
 
 @Service
@@ -23,13 +24,13 @@ public class ManagerService {
 	BranchDao bdao;
 	
 //	
-	public  ResponseEntity<Manager> savebranch(Manager m)
+	public  ResponseEntity<Manager> savemanager(Manager m)
 	{
 		return  new ResponseEntity<Manager>( dao.savemanager(m),HttpStatus.CREATED);
 	}
 	
 //	
-	public  ResponseEntity<Manager> findbranch(int id)
+	public  ResponseEntity<Manager> findmanager(int id)
 	{
 		Manager man = dao.findbymanager(id);
 		if(man!=null)
@@ -43,7 +44,7 @@ public class ManagerService {
 	}
 	
 //	
-	public ResponseEntity<Manager> updatebranch(int id, Manager m)
+	public ResponseEntity<Manager> updatemanager(int id, Manager m)
 	
 	{
 		Manager man = dao.updatemanager(id, m);
@@ -58,7 +59,7 @@ public class ManagerService {
 	}
 	
 //	
-	 public ResponseEntity<Manager>deletebranch(int id)
+	 public ResponseEntity<Manager>deletemanager(int id)
 	 {
 		 Manager man = dao.deletemanager(id);
 		 if(man!=null)
@@ -130,6 +131,21 @@ public class ManagerService {
 		 throw new ManagerNotFoundException("Manager not found for the given id") ;
 		 
 	 }
+	 
+//	 
+	 
+	 public ResponseEntity<List<Manager>> findbyname(String name){
+			 List<Manager> list = dao.findbyname(name);
+			 if(list!=null)
+			 {
+				 return new ResponseEntity<List<Manager>>(list,HttpStatus.FOUND);
+			 }
+			 else
+			 {
+				 throw new ManagerNameNotFoundException("Manager not found for the given name") ;
+			 }
+			 
+		}
 	 
 	 
 	

@@ -79,4 +79,12 @@ public List<Account> findall()
 	return repo.findAll();
 }
 
+//6.finby type
+
+	public List<Account> findbytype(Account.AccountType type)
+	{
+		return repo.findBytype(type);
+	}
+
+
 }

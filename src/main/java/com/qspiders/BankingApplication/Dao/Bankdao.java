@@ -17,7 +17,7 @@ public class Bankdao {
 //1	save method
 	public  Bank savebank(Bank b)
 	{
-		return repo.save(null);
+		return repo.save(b);
 		
 	}
 	
@@ -82,4 +82,21 @@ public class Bankdao {
 	{
 		return repo.findAll();
 	}
+	
+	
+//	6.findbyname
+	
+	
+	public List<Bank> findbyname(String name){
+		return repo.findBybankName(name);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

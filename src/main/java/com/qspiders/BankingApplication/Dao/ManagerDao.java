@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.qspiders.BankingApplication.Dto.Bank;
 import com.qspiders.BankingApplication.Dto.Manager;
 import com.qspiders.BankingApplication.Repository.ManagerRepo;
 @Repository
@@ -84,6 +85,11 @@ public class ManagerDao {
 		return repo.findAll();
 	}
 	
+	
+//	6.findby name
+	public List<Manager> findbyname(String name){
+		return repo.findBymanagerName(name);
+	}
 	
 	
 }

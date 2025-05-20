@@ -38,7 +38,7 @@ public class TransactionDao {
 	
 //	3.update
 	
-	public Transaction updateaccount(int id, Transaction t)
+	public Transaction updatetransaction(int id, Transaction t)
 	{
 		Transaction transaction = findtransaction(id); 
 		if(transaction!=null)
@@ -85,6 +85,22 @@ public class TransactionDao {
 	{
 		return repo.findAll();
 	}
+	
+//	6.findby type
+	
+	public List<Transaction> findbytype(Transaction.TransactionType type)
+	{
+		return repo.findByType(type);
+		
+	}
+	
+//	7.findacctype
+	
+	
+//	public List<Transaction>findBytransactionAccount(Transaction.TransactionType)
+//	{
+//		return repo.findBytransactionAccount(acctype);
+//	}
 	
 	
 	

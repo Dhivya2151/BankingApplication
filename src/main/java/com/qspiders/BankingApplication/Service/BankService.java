@@ -13,6 +13,7 @@ import com.qspiders.BankingApplication.Dao.BranchDao;
 import com.qspiders.BankingApplication.Dto.Bank;
 import com.qspiders.BankingApplication.Dto.Branch;
 import com.qspiders.BankingApplication.Exception.BankListNotFoundException;
+import com.qspiders.BankingApplication.Exception.BankNameNotFoundException;
 import com.qspiders.BankingApplication.Exception.BankNotFoundException;
 import com.qspiders.BankingApplication.Exception.BranchNotFoundException;
 @Service
@@ -99,7 +100,7 @@ public class BankService {
 				 Bank updateBank = dao.updateBank(bankid, dbbank);
 				 return  new ResponseEntity<Bank>(updateBank,HttpStatus.OK);
 			}
-			throw new BranchNotFoundException("bank not found for the given id") ;
+			throw new BranchNotFoundException("branch not found for the given id") ;
 		}
 		throw new BankNotFoundException("bank not found for the given id") ;
 		
@@ -120,7 +121,7 @@ public class BankService {
 				 dbbranch.setBank(null);
 				 return dao.updateBank(bankid, dbbank);
 			}
-			throw new BranchNotFoundException("bank not found for the given id") ;
+			throw new BranchNotFoundException("branch not found for the given id") ;
 		}
 		throw new BankNotFoundException("bank not found for the given id") ;
 		
@@ -128,5 +129,19 @@ public class BankService {
 		
 	}
 	
+//	find by name
+	
+	public ResponseEntity<List<Bank>> findbyname(String name)
+	{
+		List<Bank> list = dao.findbyname(name);
+		if(list!=null)
+		{
+			return new ResponseEntity<List<Bank>>(list,HttpStatus.FOUND);
+		}
+		else
+		{
+			throw new BankNameNotFoundException("bank not found for the given name") ;
+		}
+	}
 	
 }
